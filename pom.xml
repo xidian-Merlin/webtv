@@ -17,6 +17,9 @@
 		<junit.version>4.10</junit.version>
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.1</mybatis.version>
+		<!--分页用 -->
+		<mybatis_pagehelper_version>4.1.6</mybatis_pagehelper_version>
+		<mysql-connector-java.version>5.1.40</mysql-connector-java.version>
 	</properties>
 	<dependencies>
 		<!-- 添加Spring依赖 -->
@@ -191,6 +194,30 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+
+			<!--mybatis逆向工程插件-->
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<configuration>
+					<verbose>true</verbose>
+					<overwrite>true</overwrite>
+				</configuration>
+			</plugin>
 		</plugins>
+
+
+
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+			</resource>
+		</resources>
+
+
 	</build>
 </project>
