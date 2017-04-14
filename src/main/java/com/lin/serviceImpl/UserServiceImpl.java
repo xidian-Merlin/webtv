@@ -1,5 +1,6 @@
 package com.lin.serviceImpl;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,14 @@ public class UserServiceImpl implements UserService {
 	public User findUserByLoginName(String username) {
 		System.out.println("findUserByLoginName call!");
 		return userDao.findUserByLoginName(username);
+	}
+
+	public boolean saveUser(User user){
+
+		userDao.insert(user);
+
+
+		return true;
 	}
 
 }

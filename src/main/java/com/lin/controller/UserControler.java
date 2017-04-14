@@ -20,7 +20,10 @@ import com.lin.domain.User;
 import com.lin.realm.ShiroDbRealm;
 import com.lin.service.UserService;
 import com.lin.utils.CipherUtil;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -28,6 +31,7 @@ public class UserControler {
 	private static Logger logger = LoggerFactory.getLogger(ShiroDbRealm.class);
 	@Autowired
 	private UserService userService;
+
 	
 	/**
 	 * 验证springmvc与batis连接成功
@@ -84,6 +88,57 @@ public class UserControler {
 		}
 		return result;
 	}
+
+	@RequestMapping("/regist.do")
+	public @ResponseBody Map<String, Object> getResponseOfRegist(HttpServletRequest request) {
+		System.out.println("注册功能执行");
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		//获取用户名与密码
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		User user = new User();
+		user.setPassword(password);
+		user.setUsername(username);
+
+		//List< User> users= new ArrayList<User>();
+
+		//查询数据库， 判断用户名是否已注册
+		User user1 = userService.findUserByLoginName(username);
+		if(null != user1) {
+
+			//返回注册结果为用户已经存在
+
+
+			map.put("success", false);
+			map.put("message", "the user has exist");
+			map1.put("response",map);
+		}else{
+
+			//返回注册结果，注册成功，将用户名与密码存入数据库
+			userService.saveUser(user);
+
+			map.put("success", true);
+			map.put("message", "Successfully returning the data.");
+			map1.put("response",map);
+
+
+		}
+
+
+		//返回注册结果
+
+
+		map.put("success", true);
+		map.put("message", "Successfully returning the data.");
+		map1.put("response",map);
+
+		return map1;
+
+
+	}
+
+
 
 
 	/**

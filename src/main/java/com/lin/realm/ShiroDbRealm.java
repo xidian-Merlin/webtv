@@ -27,7 +27,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	private static final String ALGORITHM = "MD5";
 	
 	@Autowired
-	private UserService userService;
+	private UserService userService; //接口而不是实现
 
 	public ShiroDbRealm() {
 		super();
