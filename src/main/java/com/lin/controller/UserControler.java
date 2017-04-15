@@ -72,20 +72,25 @@ public class UserControler {
 		String password = CipherUtil.generatePassword(request.getParameter("password"));
 		//String password = request.getParameter("password");
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-		
-		Subject currentUser = SecurityUtils.getSubject();
+
+		//从shiro的session中取出user
+		Subject subject = SecurityUtils.getSubject();
 		try {
 			System.out.println("----------------------------");
-			if (!currentUser.isAuthenticated()){//使用shiro来验证
+			if (!subject.isAuthenticated()){//该用户如果没有认证
 				token.setRememberMe(true);
-				currentUser.login(token);//验证角色和权限
+				subject.login(token);//验证角色和权限
 			}
+
+			User user = userService.findUserByLoginName(username);
+			subject.getSession().setAttribute("user", user);  //登录成功，将用户保存进shiro的 session
 			System.out.println("result: " + result);
 			result = "index";//验证成功
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			result = "login。do";//验证失败
+			result = "login.do";//验证失败
 		}
+
 		return result;
 	}
 
@@ -96,7 +101,9 @@ public class UserControler {
 		Map<String, Object> map1 = new HashMap<String, Object>();
 		//获取用户名与密码
 		String username = request.getParameter("username");
+
 		String password = request.getParameter("password");
+		password = CipherUtil.generatePassword(request.getParameter("password"));
 		User user = new User();
 		user.setPassword(password);
 		user.setUsername(username);

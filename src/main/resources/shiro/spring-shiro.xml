@@ -7,6 +7,14 @@
 
 	<description>Shiro Configuration</description>
 
+	<!-- 会话管理器 -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<!-- session的失效时长，单位毫秒 -->
+		<property name="globalSessionTimeout" value="600000"/>
+		<!-- 删除失效的session -->
+		<property name="deleteInvalidSessions" value="true"/>
+	</bean>
+
 	<!--securityManage-->
 	<!-- 安全管理器 -->
 	<!-- Shiro's main business-tier object for web-enabled applications -->
@@ -15,6 +23,9 @@
 
 		<!-- 注入缓存管理器-->
 		<property name="cacheManager" ref="cacheManager" />
+
+		<!--注入会话管理器-->
+		<property name="sessionManager" ref="sessionManager" />
 	</bean>
 
 	<!-- 項目自定义的Realm -->
@@ -43,11 +54,16 @@
 	</bean>
 
 	<!-- 用户授权信息Cache -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" >
+	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+
+
+ <!--
+
+	使用了ecache
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
 		<property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
 	</bean>
-
-
+-->
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 
