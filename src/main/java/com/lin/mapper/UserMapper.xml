@@ -213,7 +213,7 @@
     select
     <include refid="Base_Column_List" />
     from user
-    where name = #{username,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
   </select>
 
 </mapper>

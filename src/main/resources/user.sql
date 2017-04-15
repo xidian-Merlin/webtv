@@ -6,6 +6,7 @@ CREATE TABLE `user` (
   `username` varchar(32) NOT NULL COMMENT '用户名称',  
   `password` varchar(32) NOT NULL COMMENT '用户密码',
   `sex` char(1) DEFAULT NULL COMMENT '性别',  
-  `address` varchar(256) DEFAULT NULL COMMENT '地址',  
+  `address` varchar(256) DEFAULT NULL COMMENT '地址',
+  'pic' varchar(256) NOT NULL COMMENT '用户头像地址',
   PRIMARY KEY (`id`)  
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;  
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

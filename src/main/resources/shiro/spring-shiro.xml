@@ -7,9 +7,13 @@
 
 	<description>Shiro Configuration</description>
 
+	<!--securityManage-->
+	<!-- 安全管理器 -->
 	<!-- Shiro's main business-tier object for web-enabled applications -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="shiroDbRealm" />
+
+		<!-- 注入缓存管理器-->
 		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
@@ -29,14 +33,20 @@
 				/index.html = authc
 				/requestjson.do = anon
 				/login.do = anon
+				/regist.do = anon
 				/logout.html = anon
+				<!--请求这个地址就自动退出-->
+				/logout.action=logout
 				/** = authc
 			</value>
 		</property>
 	</bean>
 
 	<!-- 用户授权信息Cache -->
-	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+	<bean id="cacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" >
+		<property name="cacheManagerConfigFile" value="classpath:shiro-ehcache.xml"/>
+	</bean>
+
 
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />

@@ -104,7 +104,8 @@ public class UserControler {
 		//List< User> users= new ArrayList<User>();
 
 		//查询数据库， 判断用户名是否已注册
-		User user1 = userService.findUserByLoginName(username);
+		User user1 = null;
+		user1 = userService.findUserByLoginName(username);
 		if(null != user1) {
 
 			//返回注册结果为用户已经存在
@@ -128,10 +129,6 @@ public class UserControler {
 
 		//返回注册结果
 
-
-		map.put("success", true);
-		map.put("message", "Successfully returning the data.");
-		map1.put("response",map);
 
 		return map1;
 

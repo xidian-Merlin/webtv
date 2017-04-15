@@ -24,6 +24,7 @@ import com.lin.utils.CipherUtil;
 
 public class ShiroDbRealm extends AuthorizingRealm {
 	private static Logger logger = LoggerFactory.getLogger(ShiroDbRealm.class);
+	//凭证
 	private static final String ALGORITHM = "MD5";
 	
 	@Autowired
