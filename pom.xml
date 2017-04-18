@@ -170,7 +170,25 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>1.2.1</version>
 		</dependency>
-		<!-- Spring 整合Shiro需要的依赖 -->
+		<!-- Spring 整合Shiro需要的依赖
+
+		启动shiro授权注解拦截方式，就可以了另外这个还需要aspectj的支持 -->
+
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.6.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.6.12</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
+		</dependency>
 
 	</dependencies>
 	<build>

@@ -3,8 +3,10 @@ package com.lin.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.tools.internal.ws.processor.model.Response;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,9 @@ public class UserControler {
 	private static Logger logger = LoggerFactory.getLogger(ShiroDbRealm.class);
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ShiroDbRealm shiroDbRealm;
 
 	
 	/**
@@ -64,8 +69,10 @@ public class UserControler {
 	 * @return
 	 */
 	@RequestMapping("/checkLogin.do")
-	public String login(HttpServletRequest request) {
-		String result = "login.do";
+	public  @ResponseBody Map<String, Object> login(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		//String result = "login.do";
 		// 取得用户名
 		String username = request.getParameter("username");
 		//取得 密码，并用MD5加密
@@ -78,21 +85,36 @@ public class UserControler {
 		try {
 			System.out.println("----------------------------");
 			if (!subject.isAuthenticated()){//该用户如果没有认证
-				token.setRememberMe(true);
+				token.setRememberMe(true);  //记住我
 				subject.login(token);//验证角色和权限
 			}
-
+			//用户名验证成功
 			User user = userService.findUserByLoginName(username);
-			subject.getSession().setAttribute("user", user);  //登录成功，将用户保存进shiro的 session
-			System.out.println("result: " + result);
-			result = "index";//验证成功
+			//登录成功，将用户保存进shiro的 session
+			subject.getSession().setAttribute("user", user);
+
+			map.put("success", true);
+			map.put("message", "login Successfully");
+			map1.put("response",map);
+
+			//System.out.println("result: " + result);
+			//result = "index";//验证成功
 		} catch (Exception e) {
 			logger.error(e.getMessage());
-			result = "login.do";//验证失败
+			map.put("success", false);
+			map.put("message", "login failed");
+			map1.put("response",map);
+			//result = "login.do";//验证失败
 		}
 
-		return result;
+		return map1;
 	}
+
+	/**
+	 * 注册功能
+	 * @param request
+	 * @return jsonmessage
+	 */
 
 	@RequestMapping("/regist.do")
 	public @ResponseBody Map<String, Object> getResponseOfRegist(HttpServletRequest request) {
@@ -127,44 +149,23 @@ public class UserControler {
 			userService.saveUser(user);
 
 			map.put("success", true);
-			map.put("message", "Successfully returning the data.");
+			map.put("message", "Successfully resisting");
 			map1.put("response",map);
-
-
 		}
-
-
 		//返回注册结果
-
-
-		return map1;
-
-
-	}
-
-
-
-
-	/**
-	 * 通过注解@ResponseBody返回JSON数据
-	 *
-	 * @return
-	 */
-	@RequestMapping("/requestjson.do")
-	public @ResponseBody Map<String, Object> getAjaxDataByResponseBody() {
-		System.out.println("通过注解@ResponseBody返回JSON数据");
-		Map<String, Object> map = new HashMap<String, Object>();
-		Map<String, Object> map1 = new HashMap<String, Object>();
-		map.put("success", true);
-		map.put("message", "Successfully returning the data.");
-		map1.put("response",map);
-
 		return map1;
 	}
+
+
+
+
+
+
     /**
      * 退出
      * @return
      */
+
     @RequestMapping(value = "/logout")  
     @ResponseBody  
     public String logout() {  
@@ -176,7 +177,7 @@ public class UserControler {
     }  
     
     /**
-     * 妫?煡
+     *
      * @return
      */
     @RequestMapping(value = "/chklogin", method = RequestMethod.POST)  
@@ -187,5 +188,37 @@ public class UserControler {
             return "false";  
         }  
         return "true";  
-    }  
+    }
+
+	/**
+	 * 获取播放地址
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/showingtime.do") //鉴权，是否能够进行直播
+	//@RequiresRoles("anchor")
+	public void getAddress(HttpServletRequest request,HttpServletResponse response) {
+
+//		Subject currentUser = SecurityUtils.getSubject();
+//		String name = request.getParameter("username") ;
+//		String password = request.getParameter("password");
+//		shiroDbRealm.clearCachedAuthorizationInfo((String) currentUser.getPrincipal().toString());
+//
+//
+//
+//		if(currentUser.hasRole("anchor")){   //一次授权之后会有缓存，下次不会再进行判断
+//			System.out.print("有该角色");
+//
+//
+//
+//
+//		}
+//		else {
+//			System.out.print("没哦");
+//			response.setStatus(HttpServletResponse.SC_NOT_FOUND);//返回404状态；
+//
+//		}
+//
+//
+	}
 }

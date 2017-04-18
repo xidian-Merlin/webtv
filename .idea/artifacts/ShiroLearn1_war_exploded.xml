@@ -17,7 +17,6 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:3.2.8.RELEASE" />
           <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-aspects:3.2.8.RELEASE" />
-          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.7.4" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:3.2.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:3.2.8.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-web:3.2.8.RELEASE" />
@@ -37,6 +36,10 @@
           <element id="library" level="project" name="Maven: org.apache.shiro:shiro-ehcache:1.2.1" />
           <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache-core:2.5.0" />
           <element id="library" level="project" name="Maven: org.apache.shiro:shiro-spring:1.2.1" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.6.11" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.6.12" />
+          <element id="library" level="project" name="Maven: cglib:cglib:2.2.2" />
+          <element id="library" level="project" name="Maven: asm:asm:3.3.1" />
         </element>
       </element>
       <element id="directory" name="META-INF">

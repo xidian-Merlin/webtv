@@ -3,11 +3,8 @@ package com.lin.realm;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.cache.Cache;
@@ -40,33 +37,40 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authcToken) throws AuthenticationException {
+
 		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
 		System.out.println(token.getUsername());
-		User user = userService.findUserByLoginName(token.getUsername());
-		System.out.println(user);
-		CipherUtil cipher = new CipherUtil();//MD5加密
-		if (user != null) {
-			return new SimpleAuthenticationInfo(user.getUsername(), cipher.generatePassword(user.getPassword()), getName());
-		}else{
-			throw new AuthenticationException();
+
+		String username = (String)token.getPrincipal();  //得到用户名
+		String password = new String((char[])token.getCredentials()); //得到密码
+
+		User user = userService.findUserByLoginName(username);
+
+		if(!user.getUsername().equals(username)) {
+			throw new UnknownAccountException(); //如果用户名错误
 		}
+		if(!user.getPassword().equals(password)) {
+			throw new IncorrectCredentialsException(); //如果密码错误
+		}
+		//如果身份认证验证成功，返回一个AuthenticationInfo实现；
+		return new SimpleAuthenticationInfo(username, password, getName());
 	}
 
 	/**
-	 * 登陆成功之后，进行角色和权限验证
+	 *  查验授权信息时，如果没有授权缓存，就回调此函数，对用户进行角色赋予及授权
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		/*这里应该根据userName使用role和permission 的serive层来做判断，并将对应 的权限加进来，下面简化了这一步*/
 		Set<String> roleNames = new HashSet<String>();
 	    Set<String> permissions = new HashSet<String>();
-	    roleNames.add("admin");//添加角色。对应到index.jsp
-	    roleNames.add("administrator");
-	    permissions.add("create");//添加权限,对应到index.jsp
-	    permissions.add("login.do?main");
-	    permissions.add("login.do?logout");
+	  //  roleNames.add("admin");//添加角色。对应到index.jsp
+	    roleNames.add("anchor");//添加角色，主播
+	  //  permissions.add("create");//添加权限,对应到index.jsp
+	   // permissions.add("login.do?main");
+	   /// permissions.add("login.do?logout");
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roleNames);
-	    info.setStringPermissions(permissions);
+	  //  info.setStringPermissions(permissions);
 		return info;
 	}
 

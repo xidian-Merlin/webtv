@@ -45,6 +45,7 @@
 				/requestjson.do = anon
 				/login.do = anon
 				/regist.do = anon
+				/showingtime.do = anon
 				/logout.html = anon
 				<!--请求这个地址就自动退出-->
 				/logout.action=logout
