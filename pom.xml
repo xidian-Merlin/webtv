@@ -18,8 +18,7 @@
 		<!-- mybatis版本号 -->
 		<mybatis.version>3.2.1</mybatis.version>
 		<!--分页用 -->
-		<mybatis_pagehelper_version>4.1.6</mybatis_pagehelper_version>
-		<mysql-connector-java.version>5.1.40</mysql-connector-java.version>
+
 	</properties>
 	<dependencies>
 		<!-- 添加Spring依赖 -->
@@ -135,11 +134,19 @@
 			<version>1.2.0</version>
 		</dependency>
 
+
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+
+
 		<!-- mysql驱动包 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.29</version>
+			<version>5.1.40</version>
 		</dependency>
 
        <!-- servlet驱动包 -->

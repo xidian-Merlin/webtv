@@ -3,6 +3,9 @@ package com.lin.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.pagehelper.PageHelper;
+import com.lin.dao.UserDao;
+import com.lin.domain.UserExample;
 import com.sun.tools.internal.ws.processor.model.Response;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -23,6 +26,9 @@ import com.lin.realm.ShiroDbRealm;
 import com.lin.service.UserService;
 import com.lin.utils.CipherUtil;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -197,28 +203,86 @@ public class UserControler {
 	 */
 	@RequestMapping("/showingtime.do") //鉴权，是否能够进行直播
 	//@RequiresRoles("anchor")
-	public void getAddress(HttpServletRequest request,HttpServletResponse response) {
+	public void getAddress(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
-//		Subject currentUser = SecurityUtils.getSubject();
-//		String name = request.getParameter("username") ;
-//		String password = request.getParameter("password");
-//		shiroDbRealm.clearCachedAuthorizationInfo((String) currentUser.getPrincipal().toString());
-//
-//
-//
-//		if(currentUser.hasRole("anchor")){   //一次授权之后会有缓存，下次不会再进行判断
-//			System.out.print("有该角色");
-//
-//
-//
-//
-//		}
-//		else {
-//			System.out.print("没哦");
-//			response.setStatus(HttpServletResponse.SC_NOT_FOUND);//返回404状态；
-//
-//		}
-//
-//
+		Subject currentUser = SecurityUtils.getSubject();
+		String name = request.getParameter("username") ;
+		String password = request.getParameter("password");
+		//清空认证缓存
+		shiroDbRealm.clearCachedAuthorizationInfo((String) currentUser.getPrincipal().toString());
+
+
+
+		if(currentUser.hasRole("anchor")){   //一次授权之后会有缓存，下次不会再进行判断
+			System.out.print("有该角色");
+
+
+
+
+		}
+		else {
+			System.out.print("没哦");
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);//返回404状态；
+			response.getWriter().write("messaege: 没有该角色");
+
+		}
+
+
 	}
+
+
+	@RequestMapping("/getAnchor.do")
+	public  @ResponseBody Map<String, Object> getAnchor (HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map1 = new HashMap<String, Object>();
+ 		//使用了pageHelper插件来分业
+		String pageValue = request.getParameter("pageValue");
+		int pageNum = 1;
+
+ 		try{
+			pageNum = Integer.valueOf(pageValue).intValue();
+		} catch (NumberFormatException e){
+			e.printStackTrace();
+		}
+
+		List<User> list = userService.getAllByLimit(pageNum,20);
+
+		if(list==null){
+			return null;
+		}
+		int count = 1;
+		for(User user : list) {
+
+			Field[] fields = user.getClass().getDeclaredFields();//获取类的各个属性值
+			for (Field field : fields) {
+				String fieldName = field.getName();//获取类的属性名称
+				if (getValueByFieldName(fieldName, user) != null)//获取类的属性名称对应的值
+					map.put(fieldName, getValueByFieldName(fieldName, user));
+			}
+			//主播标记
+			String anchorTag = "anchor" + count;
+
+			map1.put(anchorTag,map);
+			map.clear();
+			count++;
+		}
+		return map1;
+
+	}
+
+
+
+	public static Object getValueByFieldName(String fieldName,Object object){
+		String firstLetter=fieldName.substring(0,1).toUpperCase();
+		String getter = "get"+firstLetter+fieldName.substring(1);
+		try {
+			Method method = object.getClass().getMethod(getter, new Class[]{});
+			Object value = method.invoke(object, new Object[] {});
+			return value;
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+
 }
