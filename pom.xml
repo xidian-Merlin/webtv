@@ -120,6 +120,7 @@
 			<scope>test</scope>
 		</dependency>
 
+
 		<!--mybatis依赖 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
@@ -177,6 +178,9 @@
 			<artifactId>shiro-spring</artifactId>
 			<version>1.2.1</version>
 		</dependency>
+
+
+
 		<!-- Spring 整合Shiro需要的依赖
 
 		启动shiro授权注解拦截方式，就可以了另外这个还需要aspectj的支持 -->
@@ -195,6 +199,18 @@
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
 			<version>2.2.2</version>
+		</dependency>
+
+		<!-- 文件上传配置-->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
 		</dependency>
 
 	</dependencies>

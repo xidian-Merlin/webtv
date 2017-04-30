@@ -10,60 +10,89 @@
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="test"/>
-    <table id="7" parent="2" name="user"/>
-    <table id="8" parent="2" name="visitor"/>
-    <column id="9" parent="7" name="id">
+    <table id="7" parent="2" name="test"/>
+    <table id="8" parent="2" name="user"/>
+    <table id="9" parent="2" name="visitor"/>
+    <column id="10" parent="7" name="ID">
+      <Position>1</Position>
+      <DataType>int(1) unsigned zerofill|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="11" parent="7" name="sex">
+      <Position>2</Position>
+      <DataType>tinyint(4)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;2&apos;</DefaultExpression>
+    </column>
+    <key id="12" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="13" parent="8" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="10" parent="7" name="username">
+    <column id="14" parent="8" name="username">
       <Position>2</Position>
       <Comment>用户名称</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="11" parent="7" name="password">
+    <column id="15" parent="8" name="password">
       <Position>3</Position>
       <Comment>用户密码</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="12" parent="7" name="sex">
+    <column id="16" parent="8" name="sex">
       <Position>4</Position>
       <Comment>性别</Comment>
       <DataType>char(1)|0</DataType>
     </column>
-    <column id="13" parent="7" name="address">
+    <column id="17" parent="8" name="address">
       <Position>5</Position>
       <Comment>地址</Comment>
       <DataType>varchar(256)|0</DataType>
     </column>
-    <key id="14" parent="7" name="PRIMARY">
+    <column id="18" parent="8" name="pic">
+      <Position>6</Position>
+      <Comment>用户头像地址</Comment>
+      <DataType>varchar(256)|0</DataType>
+    </column>
+    <column id="19" parent="8" name="live">
+      <Position>7</Position>
+      <Comment>是否在直播</Comment>
+      <DataType>tinyint(1)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <key id="20" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="15" parent="8" name="id">
+    <column id="21" parent="9" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="16" parent="8" name="username">
+    <column id="22" parent="9" name="username">
       <Position>2</Position>
       <Comment>用户名称</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="17" parent="8" name="password">
+    <column id="23" parent="9" name="password">
       <Position>3</Position>
       <Comment>用户密码</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="18" parent="8" name="PRIMARY">
+    <key id="24" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>

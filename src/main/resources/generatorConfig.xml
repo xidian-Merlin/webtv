@@ -53,6 +53,7 @@
         </javaClientGenerator>
         <!-- 指定数据库表 -->
         <table tableName="user"></table>
+        <table tableName="vistor"></table>
 
         <!-- 有些表的字段需要指定java类型
          <table schema="" tableName="">

@@ -13,4 +13,6 @@ public interface UserService {
 	public boolean saveUser(User user);
 
 	public User findUserByLoginName(String username);
+
+	public boolean updateUserBySelect(User user);
 }

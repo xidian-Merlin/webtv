@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.github.pagehelper.PageHelper;
 import com.lin.dao.UserDao;
+import com.lin.domain.AnchorModel;
 import com.lin.domain.UserExample;
 import com.sun.tools.internal.ws.processor.model.Response;
 import org.apache.shiro.SecurityUtils;
@@ -68,6 +69,25 @@ public class UserControler {
 		logger.debug("来自IP[" + request.getRemoteHost() + "]的访问");
 		return "login";
 	}
+
+
+    /**
+     -	 * 通过注解@ResponseBody返回JSON数据
+     -	 *
+     -	 * @return
+     -	 */
+ 	@RequestMapping("/requestjson.do")
+ 	public @ResponseBody Map<String, Object> getAjaxDataByResponseBody() {
+        		System.out.println("通过注解@ResponseBody返回JSON数据");
+        		Map<String, Object> map = new HashMap<String, Object>();
+        		Map<String, Object> map1 = new HashMap<String, Object>();
+        		map.put("success", true);
+        		map.put("message", "Successfully returning the data.");
+        		map1.put("response",map);
+
+        		return map1;
+        	}
+
 	
 	/**
 	 * 验证用户名和密码
@@ -152,6 +172,7 @@ public class UserControler {
 		}else{
 
 			//返回注册结果，注册成功，将用户名与密码存入数据库
+			user.setLive(false);
 			userService.saveUser(user);
 
 			map.put("success", true);
@@ -174,12 +195,25 @@ public class UserControler {
 
     @RequestMapping(value = "/logout")  
     @ResponseBody  
-    public String logout() {  
-  
-        Subject currentUser = SecurityUtils.getSubject();  
-        String result = "logout";  
-        currentUser.logout();  
-        return result;  
+    public Map<String, Object>  logout() {
+
+        System.out.println("登出功能执行");
+        //将取消角色绑定
+      //  Subject currentUser = SecurityUtils.getSubject();
+        //String result = "logout";
+       // currentUser.logout();
+
+        //将数据库中该用户设置为不在线
+
+
+
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        map.put("success", true);
+        map.put("message", "Successfully  loginout.");
+        map1.put("response",map);
+        return map1;
     }  
     
     /**
@@ -207,14 +241,26 @@ public class UserControler {
 
 		Subject currentUser = SecurityUtils.getSubject();
 		String name = request.getParameter("username") ;
-		String password = request.getParameter("password");
+		String password = CipherUtil.generatePassword(request.getParameter("password"));
 		//清空认证缓存
-		shiroDbRealm.clearCachedAuthorizationInfo((String) currentUser.getPrincipal().toString());
+	//	shiroDbRealm.clearCachedAuthorizationInfo((String) currentUser.getPrincipal().toString());
 
+        User anchor = userService.findUserByLoginName(name);
 
+		//if(currentUser.hasRole("anchor"))
 
-		if(currentUser.hasRole("anchor")){   //一次授权之后会有缓存，下次不会再进行判断
+        if (password.equals(anchor.getPassword()))
+
+		{   //一次授权之后会有缓存，下次不会再进行判断
 			System.out.print("有该角色");
+			//将数据库中的该角色的live设置为1，表示主播开始直播了
+            anchor.setLive(true);
+
+            userService.updateUserBySelect(anchor);
+
+
+
+
 
 
 
@@ -231,13 +277,57 @@ public class UserControler {
 	}
 
 
-	@RequestMapping("/getAnchor.do")
-	public  @ResponseBody Map<String, Object> getAnchor (HttpServletRequest request) {
+    /**
+     * 关闭直播
+     * @param request
+     * @return
+     */
+
+	@RequestMapping("/closetime.do")
+	public @ResponseBody Map<String, Object> closeShowing(HttpServletRequest request) {
+
+
+		System.out.println("关闭直播");
+
+		String name = request.getParameter("username") ;
+		String password = CipherUtil.generatePassword(request.getParameter("password"));
+		//清空认证缓存
+		//	shiroDbRealm.clearCachedAuthorizationInfo((String) currentUser.getPrincipal().toString());
+
+		User anchor = userService.findUserByLoginName(name);
+
+		//将数据库中的该角色的live设置为1，表示主播关闭了直播；
+		anchor.setLive(false);
+
+		userService.updateUserBySelect(anchor);
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		Map<String, Object> map1 = new HashMap<String, Object>();
+		map.put("success", true);
+		map.put("message", "Successfully  close living");
+		map1.put("response",map);
+
+		return map1;
+	}
+
+
+
+
+
+    /**
+     * 分页请求在线的主播
+     * @param request
+     * @return
+     */
+
+	@RequestMapping("/getAnchor.do")
+	public  @ResponseBody Map<String, Object> getAnchor (HttpServletRequest request) {
+
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		List<AnchorModel> anchors = new ArrayList<AnchorModel>();
  		//使用了pageHelper插件来分业
-		String pageValue = request.getParameter("pageValue");
-		int pageNum = 1;
+		String pageValue = request.getParameter("page");
+		int pageNum = 0;
 
  		try{
 			pageNum = Integer.valueOf(pageValue).intValue();
@@ -245,44 +335,41 @@ public class UserControler {
 			e.printStackTrace();
 		}
 
+
+        //分页查询
 		List<User> list = userService.getAllByLimit(pageNum,20);
 
 		if(list==null){
 			return null;
 		}
+
+
 		int count = 1;
+
+
 		for(User user : list) {
 
-			Field[] fields = user.getClass().getDeclaredFields();//获取类的各个属性值
-			for (Field field : fields) {
-				String fieldName = field.getName();//获取类的属性名称
-				if (getValueByFieldName(fieldName, user) != null)//获取类的属性名称对应的值
-					map.put(fieldName, getValueByFieldName(fieldName, user));
-			}
-			//主播标记
-			String anchorTag = "anchor" + count;
+		AnchorModel anchor = new AnchorModel();
+        anchor.setId(user.getId());
+        anchor.setUsername(user.getUsername());
+        anchor.setSex(user.getSex());
+        anchor.setAddress(user.getAddress());
 
-			map1.put(anchorTag,map);
-			map.clear();
-			count++;
+     //   Map<String, Object> map = new HashMap<String, Object>();
+
+       // String anchorTag = "anchor"+count;
+
+       // map.put(anchorTag, anchor);
+
+        anchors.add(anchor);
+
+        count ++;
+
 		}
+		map1.put("anchors", anchors);
 		return map1;
 
 	}
 
-
-
-	public static Object getValueByFieldName(String fieldName,Object object){
-		String firstLetter=fieldName.substring(0,1).toUpperCase();
-		String getter = "get"+firstLetter+fieldName.substring(1);
-		try {
-			Method method = object.getClass().getMethod(getter, new Class[]{});
-			Object value = method.invoke(object, new Object[] {});
-			return value;
-		} catch (Exception e) {
-			return null;
-		}
-
-	}
 
 }

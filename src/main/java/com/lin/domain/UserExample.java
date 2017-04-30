@@ -443,6 +443,136 @@ public class UserExample {
             addCriterion("address not between", value1, value2, "address");
             return (Criteria) this;
         }
+
+        public Criteria andPicIsNull() {
+            addCriterion("pic is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicIsNotNull() {
+            addCriterion("pic is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicEqualTo(String value) {
+            addCriterion("pic =", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicNotEqualTo(String value) {
+            addCriterion("pic <>", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicGreaterThan(String value) {
+            addCriterion("pic >", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicGreaterThanOrEqualTo(String value) {
+            addCriterion("pic >=", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicLessThan(String value) {
+            addCriterion("pic <", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicLessThanOrEqualTo(String value) {
+            addCriterion("pic <=", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicLike(String value) {
+            addCriterion("pic like", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicNotLike(String value) {
+            addCriterion("pic not like", value, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicIn(List<String> values) {
+            addCriterion("pic in", values, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicNotIn(List<String> values) {
+            addCriterion("pic not in", values, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicBetween(String value1, String value2) {
+            addCriterion("pic between", value1, value2, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andPicNotBetween(String value1, String value2) {
+            addCriterion("pic not between", value1, value2, "pic");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveIsNull() {
+            addCriterion("live is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveIsNotNull() {
+            addCriterion("live is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveEqualTo(Boolean value) {
+            addCriterion("live =", value, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveNotEqualTo(Boolean value) {
+            addCriterion("live <>", value, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveGreaterThan(Boolean value) {
+            addCriterion("live >", value, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("live >=", value, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveLessThan(Boolean value) {
+            addCriterion("live <", value, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveLessThanOrEqualTo(Boolean value) {
+            addCriterion("live <=", value, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveIn(List<Boolean> values) {
+            addCriterion("live in", values, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveNotIn(List<Boolean> values) {
+            addCriterion("live not in", values, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveBetween(Boolean value1, Boolean value2) {
+            addCriterion("live between", value1, value2, "live");
+            return (Criteria) this;
+        }
+
+        public Criteria andLiveNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("live not between", value1, value2, "live");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -11,6 +11,10 @@ public class User {
 
     private String address;
 
+    private String pic;
+
+    private Boolean live;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +53,21 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic == null ? null : pic.trim();
+    }
+
+    public Boolean getLive() {
+        return live;
+    }
+
+    public void setLive(Boolean live) {
+        this.live = live;
     }
 }

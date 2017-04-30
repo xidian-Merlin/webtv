@@ -7,7 +7,7 @@ CREATE TABLE `user` (
   `password` varchar(32) NOT NULL COMMENT '用户密码',
   `sex` char(1) DEFAULT NULL COMMENT '性别',  
   `address` varchar(256) DEFAULT NULL COMMENT '地址',
-  'pic' varchar(256) NOT NULL COMMENT '用户头像地址',
-  'live' BOOL NOT NULL COMMENT '是否在直播',
+  `pic` varchar(256)  DEFAULT NULL COMMENT '用户头像地址',
+  `live` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否在直播',
   PRIMARY KEY (`id`)  
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

@@ -7,6 +7,8 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="sex" jdbcType="CHAR" property="sex" />
     <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="live" jdbcType="BIT" property="live" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, password, sex, address
+    id, username, password, sex, address, pic, live
   </sql>
   <select id="selectByExample" parameterType="com.lin.domain.UserExample" resultMap="BaseResultMap">
     select
@@ -101,9 +103,11 @@
   </delete>
   <insert id="insert" parameterType="com.lin.domain.User">
     insert into user (id, username, password, 
-      sex, address)
+      sex, address, pic, live
+      )
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=CHAR}, #{address,jdbcType=VARCHAR})
+      #{sex,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, #{live,jdbcType=BIT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.lin.domain.User">
     insert into user
@@ -123,6 +127,12 @@
       <if test="address != null">
         address,
       </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="live != null">
+        live,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -139,6 +149,12 @@
       </if>
       <if test="address != null">
         #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="live != null">
+        #{live,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -166,6 +182,12 @@
       <if test="record.address != null">
         address = #{record.address,jdbcType=VARCHAR},
       </if>
+      <if test="record.pic != null">
+        pic = #{record.pic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.live != null">
+        live = #{record.live,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +199,9 @@
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=CHAR},
-      address = #{record.address,jdbcType=VARCHAR}
+      address = #{record.address,jdbcType=VARCHAR},
+      pic = #{record.pic,jdbcType=VARCHAR},
+      live = #{record.live,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +221,12 @@
       <if test="address != null">
         address = #{address,jdbcType=VARCHAR},
       </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="live != null">
+        live = #{live,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,9 +235,12 @@
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=CHAR},
-      address = #{address,jdbcType=VARCHAR}
+      address = #{address,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      live = #{live,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 
   <select id="findUserByLoginName" parameterType="string" resultMap="BaseResultMap">
     select

@@ -45,10 +45,16 @@
 				/requestjson.do = anon
 				/login.do = anon
 				/regist.do = anon
+				/closetime.do = anon
+				/getAnchor.do = anon
+				/checkLogin.do = anon
 				/logout.html = anon
+				/showingtime.do = anon
 				<!--请求这个地址就自动退出-->
-				/logout.action=logout
-				/** = authc
+				/logout.action=anon
+				/setIcon.do = anon
+
+				/** = anon
 			</value>
 		</property>
 	</bean>
