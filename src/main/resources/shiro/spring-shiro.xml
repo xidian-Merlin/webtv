@@ -53,6 +53,7 @@
 				<!--请求这个地址就自动退出-->
 				/logout.action=anon
 				/setIcon.do = anon
+				/icon/** = anon
 
 				/** = anon
 			</value>

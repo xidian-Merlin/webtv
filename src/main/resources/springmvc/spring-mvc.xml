@@ -17,6 +17,17 @@
  <!-- 注解自动扫描controller -->
  <context:component-scan base-package="com.lin.controller" />
 
+
+ <!-- 对静态资源文件的访问 -->
+ <mvc:resources location="/icon/" mapping="/ShiroLearn1/icon/**"/>
+ <mvc:resources location="/WEB-INF/jsp/js/" mapping="/js/**"/>
+ <mvc:resources location="/WEB-INF/jsp/projectjs/" mapping="/projectjs/**"/>
+ <mvc:resources location="/WEB-INF/jsp/css/" mapping="/css/**"/>
+ <mvc:resources location="/WEB-INF/jsp/fonts/" mapping="/fonts/**"/>
+ <mvc:resources location="/WEB-INF/jsp/resources/" mapping="/resources/**"/>
+ <mvc:resources location="/WEB-INF/jsp/bootstrap/" mapping="/bootstrap/**"/>
+ <mvc:resources location="/WEB-INF/jsp/build/" mapping="/build/**"/>
+
  <!-- 解决@ResponseBody注解直接返回对象并转换成JSON时出现406问题，同时解决了返回String类型乱码的问题 -->
  <mvc:annotation-driven>
   <mvc:message-converters>

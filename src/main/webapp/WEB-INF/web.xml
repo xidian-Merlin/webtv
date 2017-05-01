@@ -87,6 +87,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<!-- 拦截设置 -->
 	<servlet-mapping>
 		<servlet-name>dispatcherServlet</servlet-name>
