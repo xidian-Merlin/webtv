@@ -111,7 +111,7 @@ public class UserControler {
 		try {
 			System.out.println("----------------------------");
 			if (!subject.isAuthenticated()){//该用户如果没有认证
-				token.setRememberMe(true);  //记住我
+			//	token.setRememberMe(true);  //记住我
 				subject.login(token);//验证角色和权限
 			}
 			//用户名验证成功

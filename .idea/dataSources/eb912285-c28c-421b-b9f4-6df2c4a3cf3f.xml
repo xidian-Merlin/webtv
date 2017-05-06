@@ -10,89 +10,124 @@
     <schema id="4" parent="1" name="mysql"/>
     <schema id="5" parent="1" name="performance_schema"/>
     <schema id="6" parent="1" name="test"/>
-    <table id="7" parent="2" name="test"/>
-    <table id="8" parent="2" name="user"/>
-    <table id="9" parent="2" name="visitor"/>
-    <column id="10" parent="7" name="ID">
-      <Position>1</Position>
-      <DataType>int(1) unsigned zerofill|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="11" parent="7" name="sex">
-      <Position>2</Position>
-      <DataType>tinyint(4)|0</DataType>
-      <NotNull>1</NotNull>
-      <DefaultExpression>&apos;2&apos;</DefaultExpression>
-    </column>
-    <key id="12" parent="7" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>ID</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="13" parent="8" name="id">
+    <table id="7" parent="2" name="chatRoom"/>
+    <table id="8" parent="2" name="test"/>
+    <table id="9" parent="2" name="user"/>
+    <table id="10" parent="2" name="visitor"/>
+    <column id="11" parent="7" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="14" parent="8" name="username">
+    <column id="12" parent="7" name="anchorname">
       <Position>2</Position>
       <Comment>用户名称</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="15" parent="8" name="password">
+    <column id="13" parent="7" name="message">
+      <Position>3</Position>
+      <Comment>用户消息</Comment>
+      <DataType>varchar(1024)|0</DataType>
+    </column>
+    <column id="14" parent="7" name="sender">
+      <Position>4</Position>
+      <Comment>发送方名称</Comment>
+      <DataType>varchar(32)|0</DataType>
+    </column>
+    <column id="15" parent="7" name="sendtime">
+      <Position>5</Position>
+      <Comment>时间戳</Comment>
+      <DataType>timestamp|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+    </column>
+    <key id="16" parent="7" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="17" parent="8" name="ID">
+      <Position>1</Position>
+      <DataType>int(1) unsigned zerofill|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="18" parent="8" name="sex">
+      <Position>2</Position>
+      <DataType>tinyint(4)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;2&apos;</DefaultExpression>
+    </column>
+    <key id="19" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="20" parent="9" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="21" parent="9" name="username">
+      <Position>2</Position>
+      <Comment>用户名称</Comment>
+      <DataType>varchar(32)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="22" parent="9" name="password">
       <Position>3</Position>
       <Comment>用户密码</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="16" parent="8" name="sex">
+    <column id="23" parent="9" name="sex">
       <Position>4</Position>
       <Comment>性别</Comment>
       <DataType>char(1)|0</DataType>
     </column>
-    <column id="17" parent="8" name="address">
+    <column id="24" parent="9" name="address">
       <Position>5</Position>
       <Comment>地址</Comment>
       <DataType>varchar(256)|0</DataType>
     </column>
-    <column id="18" parent="8" name="pic">
+    <column id="25" parent="9" name="pic">
       <Position>6</Position>
       <Comment>用户头像地址</Comment>
       <DataType>varchar(256)|0</DataType>
     </column>
-    <column id="19" parent="8" name="live">
+    <column id="26" parent="9" name="live">
       <Position>7</Position>
       <Comment>是否在直播</Comment>
       <DataType>tinyint(1)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <key id="20" parent="8" name="PRIMARY">
+    <key id="27" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="21" parent="9" name="id">
+    <column id="28" parent="10" name="id">
       <Position>1</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
     </column>
-    <column id="22" parent="9" name="username">
+    <column id="29" parent="10" name="username">
       <Position>2</Position>
       <Comment>用户名称</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="23" parent="9" name="password">
+    <column id="30" parent="10" name="password">
       <Position>3</Position>
       <Comment>用户密码</Comment>
       <DataType>varchar(32)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="24" parent="9" name="PRIMARY">
+    <key id="31" parent="10" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
